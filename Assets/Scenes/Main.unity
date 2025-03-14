@@ -720,7 +720,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotCuantity: 8
   SlotPrefab: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+  ItemPrefab: {fileID: 3726108863171228451, guid: 06854e00e754caf4389567ea7b46549c, type: 3}
   InventoryContent: {fileID: 1004989300}
+  inventoryData: {fileID: 11400000, guid: cb2cb15482cd6b24e923b0253d4bb5ce, type: 2}
 --- !u!1 &1525295896
 GameObject:
   m_ObjectHideFlags: 0

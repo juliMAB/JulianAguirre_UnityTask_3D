@@ -14,6 +14,10 @@ namespace scripts.UI
         }
         public void SetItem(UIInventoryItem item)
         {
+            if (this.item)
+            {
+                Destroy(item.gameObject);
+            }
             this.item = item;
             item.transform.position = transform.position;
             item.transform.SetParent(transform);

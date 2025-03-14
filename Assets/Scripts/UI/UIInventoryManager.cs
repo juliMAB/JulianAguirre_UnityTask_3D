@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 namespace scripts.UI
 {
@@ -30,6 +31,7 @@ namespace scripts.UI
             OverSlot = GetHoverSlot();
             DragAndDropUpdate();
             EvaluateAddItem();
+            EvaluateElimiteItem();
         }
         private void DragAndDropUpdate()
         {
@@ -200,6 +202,21 @@ namespace scripts.UI
             UIInventoryItem item = Instantiate(ItemPrefab, OverSlot.transform).GetComponent<UIInventoryItem>();
             item.SetValues(inventoryItem);
             OverSlot.SetItem(item);
+        }
+        private void EvaluateElimiteItem()
+        {
+            if (!OverSlot) return;
+            if (!OverSlot.HasItem) return;
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                RemoveItem();
+            }
+        }
+        private void RemoveItem()
+        {
+            InventoryItem inventoryItem = InventoryItem.GetEmptyItem();
+            inventoryData.PutNewItem(Slots.FindIndex(n => n == OverSlot), inventoryItem);
+            Destroy(OverSlot.RemoveItem().gameObject);
         }
     }
 }

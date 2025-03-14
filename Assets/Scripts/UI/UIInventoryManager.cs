@@ -15,6 +15,8 @@ namespace scripts.UI
 
         [SerializeField] private InventorySO inventoryData = null;
 
+        [SerializeField] private ItemSO[] randomItemsToSpawn;
+
         private void Start()
         {
             Slots = new List<UIInventorySlot>();
@@ -27,6 +29,7 @@ namespace scripts.UI
         {
             OverSlot = GetHoverSlot();
             DragAndDropUpdate();
+            EvaluateAddItem();
         }
         private void DragAndDropUpdate()
         {
@@ -102,12 +105,12 @@ namespace scripts.UI
             Slots.Add(slot);
             slot.name = "slot :" + index.ToString();
 
-            ItemSO currentItem = inventoryData.GetItems()[index].item;
-            if (!currentItem) return;
+            InventoryItem currentItem = inventoryData.GetItems()[index];
+            if (!currentItem.item) return;
 
             UIInventoryItem item = Instantiate(ItemPrefab, slot.transform).GetComponent<UIInventoryItem>();
 
-            item.SetValues(currentItem.ItemImage, inventoryData.GetItems()[index].quantity.ToString(), currentItem.Name);
+            item.SetValues(currentItem);
 
             slot.SetItem(item);
         }
@@ -117,7 +120,7 @@ namespace scripts.UI
         }
         public void PutGrabedAtNewSlot(int currentSlot, int lastSlot)
         {
-            inventoryData.PutItem(currentSlot, lastSlot);
+            inventoryData.PutItemGrabedItem(currentSlot, lastSlot);
         }
         [ContextMenu("ForceUpdateInventory")]
         private void InventorySendDataToSlots()
@@ -146,10 +149,10 @@ namespace scripts.UI
             List<InventoryItem> items = inventoryData.GetItems();
             for (int i = 0; i < realQuantity; i++)
             {
-                ItemSO currentItem = items[i].item;
+                InventoryItem currentItem = items[i];
 
                 {
-                    if (currentItem == null)
+                    if (currentItem.item == null)
                     {
                         if (Slots[i].HasItem)
                             Slots[i].DestroyItemGO();
@@ -159,13 +162,13 @@ namespace scripts.UI
                     {
                         if (Slots[i].HasItem)
                         {
-                            Slots[i].SetValues(currentItem.ItemImage, items[i].quantity.ToString(), currentItem.Name);
+                            Slots[i].SetValues(currentItem);
                         }
                         else
                         {
                             UIInventoryItem item = Instantiate(ItemPrefab, Slots[i].transform).GetComponent<UIInventoryItem>();
 
-                            item.SetValues(currentItem.ItemImage, items[i].quantity.ToString(), currentItem.Name);
+                            item.SetValues(currentItem);
 
                             Slots[i].SetItem(item);
                         }
@@ -178,6 +181,25 @@ namespace scripts.UI
             Debug.Log("Drop");
             inventoryData.RemoveItem(Slots.FindIndex(n => n == LastOverSlot));
             Destroy(GrabedItem.gameObject);
+        }
+
+        private void EvaluateAddItem()
+        {
+            if (!OverSlot) return;
+            if (OverSlot.HasItem) return;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                AddItem();
+            }
+        }
+        private void AddItem()
+        {
+            ItemSO randItem = randomItemsToSpawn[Random.Range(0, randomItemsToSpawn.Length - 1)];
+            InventoryItem inventoryItem = new InventoryItem { item = randItem, quantity = 1 };
+            inventoryData.PutNewItem(Slots.FindIndex(n => n == OverSlot), inventoryItem);
+            UIInventoryItem item = Instantiate(ItemPrefab, OverSlot.transform).GetComponent<UIInventoryItem>();
+            item.SetValues(inventoryItem);
+            OverSlot.SetItem(item);
         }
     }
 }

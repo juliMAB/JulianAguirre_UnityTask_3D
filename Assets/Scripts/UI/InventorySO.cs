@@ -40,7 +40,7 @@ public class InventorySO : ScriptableObject
         inventoryItems[index] = InventoryItem.GetEmptyItem();
     }
 
-    public void PutItem(int index, int last_index)
+    public void PutItemGrabedItem(int index, int last_index)
     {
         if (GrabedItem.IsEmpty) return;
 
@@ -56,6 +56,10 @@ public class InventorySO : ScriptableObject
             inventoryItems[last_index] = temp;
             GrabedItem = InventoryItem.GetEmptyItem();
         }
+    }
+    public void PutNewItem(int index, InventoryItem item)
+    {
+        inventoryItems[index] = item;
     }
     public void RemoveItem(int index)
     {

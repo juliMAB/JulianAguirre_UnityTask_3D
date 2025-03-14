@@ -7,11 +7,18 @@ namespace scripts.UI
     {
         [SerializeField] private Image image = null;
         [SerializeField] private TextMeshProUGUI cuantity_text = null;
-        public void SetValues(Sprite sprite, string cuantity_text,string name)
+        public void SetValues(InventoryItem data)
         {
-            this.image.sprite = sprite;
-            this.cuantity_text.text = cuantity_text;
-            this.name = name; 
+            this.image.sprite = data.item.ItemImage;
+            if (data.quantity>2)
+            {
+                this.cuantity_text.text = data.quantity.ToString();
+            }
+            else
+            {
+                this.cuantity_text.text = "";
+            }
+            this.name = data.item.Name; 
         }
     }
 }

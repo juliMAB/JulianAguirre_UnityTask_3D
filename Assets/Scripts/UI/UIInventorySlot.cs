@@ -37,9 +37,9 @@ namespace scripts.UI
         {
             DestroyImmediate(item.gameObject);
         }
-        public void SetValues(Sprite sprite, string quantity_text, string name)
+        public void SetValues(InventoryItem item)
         {
-            item.SetValues(sprite, quantity_text, name);
+            this.item.SetValues(item);
         }
     }
 }

@@ -8,6 +8,8 @@ public class InventorySO : ScriptableObject
     [SerializeField]
     private List<InventoryItem> inventoryItems;
     private int Size => inventoryItems.Count;
+    [SerializeField]
+    private InventoryItem GrabedItem;
 
     public void Initialize()
     {
@@ -31,6 +33,37 @@ public class InventorySO : ScriptableObject
                 };
             }
         }
+    }
+    public void GrabItem(int index)
+    {
+        GrabedItem = inventoryItems[index];
+        inventoryItems[index] = InventoryItem.GetEmptyItem();
+    }
+
+    public void PutItem(int index, int last_index)
+    {
+        if (GrabedItem.IsEmpty) return;
+
+        if (inventoryItems[index].IsEmpty)
+        {
+            inventoryItems[index] = GrabedItem;
+            GrabedItem = InventoryItem.GetEmptyItem();
+        }
+        else
+        {
+            InventoryItem temp = inventoryItems[index];
+            inventoryItems[index] = GrabedItem;
+            inventoryItems[last_index] = temp;
+            GrabedItem = InventoryItem.GetEmptyItem();
+        }
+    }
+    public void RemoveItem(int index)
+    {
+        inventoryItems[index] = InventoryItem.GetEmptyItem();
+    }
+    public InventoryItem GetGrabed()
+    {
+        return GrabedItem;
     }
     public List<InventoryItem> GetItems()
     {

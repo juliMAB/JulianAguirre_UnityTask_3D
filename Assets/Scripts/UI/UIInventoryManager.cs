@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +5,10 @@ namespace scripts.UI
 {
     public class UIInventoryManager : MonoBehaviour
     {
-        private UIInventoryItem GrabedItem = null;
-        private UIInventorySlot OverSlot = null;
-        private UIInventorySlot LastOverSlot = null;
-        private List<UIInventorySlot> Slots = null;
+        [SerializeField] private UIInventoryItem GrabedItem = null;
+        [SerializeField] private UIInventorySlot OverSlot = null;
+        [SerializeField] private UIInventorySlot LastOverSlot = null;
+        [SerializeField] private List<UIInventorySlot> Slots = null;
         [SerializeField] private GameObject SlotPrefab = null;
         [SerializeField] private GameObject ItemPrefab = null;
         [SerializeField] private GameObject InventoryContent = null;
@@ -27,41 +26,35 @@ namespace scripts.UI
         private void Update()
         {
             OverSlot = GetHoverSlot();
+            DragAndDropUpdate();
+        }
+        private void DragAndDropUpdate()
+        {
+            OverSlot = GetHoverSlot();
             if (Input.GetMouseButtonDown(0))
             {
-                if (!OverSlot)
-                    return;
-
-                if (LastOverSlot != OverSlot) 
-                    LastOverSlot = OverSlot;
-                
-                GrabedItem = OverSlot.item;
-
-                GrabedItem.transform.SetParent(InventoryContent.transform);
-
-                OverSlot.item = null;
+                if (OverSlot)
+                    GetNewItemFromSlot();
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 if (!GrabedItem) return;
-
                 if (!OverSlot)
                 {
                     DummyDrop();
                 }
                 else
                 {
-                    if (!OverSlot.item)
+                    if (!OverSlot.HasItem)
                     {
-                        OverSlot.SetItem(GrabedItem);
+                        PutItemInClearSlot();
                     }
                     else
                     {
-                        LastOverSlot.SetItem(GrabedItem);
-                        LastOverSlot = null;
+                        SwapItems();
                     }
                 }
-                
+
                 GrabedItem = null;
             }
             else if (Input.GetMouseButton(0))
@@ -69,10 +62,28 @@ namespace scripts.UI
                 if (GrabedItem)
                     GrabedItem.transform.position = Input.mousePosition;
             }
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                InventorySendDataToSlots();
-            }
+        }
+        private void SwapItems()
+        {
+            LastOverSlot.SetItem(OverSlot.RemoveItem());
+            PutItemInClearSlot();
+            LastOverSlot = null;
+        }
+        private void PutItemInClearSlot()
+        {
+            OverSlot.SetItem(GrabedItem);
+            PutGrabedAtNewSlot(Slots.FindIndex(n => n == OverSlot), Slots.FindIndex(n => n == LastOverSlot));
+        }
+        private void GetNewItemFromSlot()
+        {
+            if (!OverSlot.HasItem)
+                return;
+            if (LastOverSlot != OverSlot)
+                LastOverSlot = OverSlot;
+
+            GrabedItem = OverSlot.RemoveItem();
+            GrabedItem.transform.SetParent(InventoryContent.transform);
+            GrabItem(Slots.FindIndex(n => n == OverSlot));
         }
         private UIInventorySlot GetHoverSlot()
         {
@@ -100,55 +111,72 @@ namespace scripts.UI
 
             slot.SetItem(item);
         }
-        private void ToggleInventory()
+        private void GrabItem(int index)
         {
-            if(gameObject.activeSelf)
-            {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                gameObject.SetActive(true);
-                InventorySendDataToSlots();
-            }
+            inventoryData.GrabItem(index);
         }
-
-        private void SlotsSendDataToInventory()
+        public void PutGrabedAtNewSlot(int currentSlot, int lastSlot)
         {
-            
+            inventoryData.PutItem(currentSlot, lastSlot);
         }
+        [ContextMenu("ForceUpdateInventory")]
         private void InventorySendDataToSlots()
         {
             int realQuantity = inventoryData.getSize();
-            if (realQuantity != Slots.Count) return;
-            else
+            int Slots_Count = Slots.Count;
+            if (realQuantity != Slots_Count)
             {
-                List<InventoryItem> items = inventoryData.GetItems();
-                for (int i = 0; i < realQuantity; i++)
+                if (realQuantity> Slots_Count)
                 {
-                    ItemSO currentItem = items[i].item;
-                    
+                    for (int i = 0; i < realQuantity- Slots_Count; i++)
                     {
-                        if (Slots[i].item)
-                        {
-                            DestroyImmediate(Slots[i].item.gameObject);
-                        }
-
-                        if (!currentItem) return;
-
-                        UIInventoryItem item = Instantiate(ItemPrefab, Slots[i].transform).GetComponent<UIInventoryItem>();
-
-                        item.SetValues(currentItem.ItemImage, items[i].quantity.ToString() ,currentItem.Name);
-
-                        Slots[i].SetItem(item);
+                        CreateNewSlot(Slots_Count + i);
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < Slots_Count - realQuantity; i++)
+                    {
+                        int index = Slots_Count - i - 1;
+                        DestroyImmediate(Slots[index].gameObject);
+                        Slots.RemoveAt(index);
+                    }
+                }
+            }
+            List<InventoryItem> items = inventoryData.GetItems();
+            for (int i = 0; i < realQuantity; i++)
+            {
+                ItemSO currentItem = items[i].item;
 
+                {
+                    if (currentItem == null)
+                    {
+                        if (Slots[i].HasItem)
+                            Slots[i].DestroyItemGO();
+                        continue;
+                    }
+                    else
+                    {
+                        if (Slots[i].HasItem)
+                        {
+                            Slots[i].SetValues(currentItem.ItemImage, items[i].quantity.ToString(), currentItem.Name);
+                        }
+                        else
+                        {
+                            UIInventoryItem item = Instantiate(ItemPrefab, Slots[i].transform).GetComponent<UIInventoryItem>();
+
+                            item.SetValues(currentItem.ItemImage, items[i].quantity.ToString(), currentItem.Name);
+
+                            Slots[i].SetItem(item);
+                        }
+                    }
+                }
             }
         }
         private void DummyDrop()
         {
             Debug.Log("Drop");
+            inventoryData.RemoveItem(Slots.FindIndex(n => n == LastOverSlot));
             Destroy(GrabedItem.gameObject);
         }
     }

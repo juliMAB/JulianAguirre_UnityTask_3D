@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: InventoryData
   m_EditorClassIdentifier: 
   inventoryItems:
-  - quantity: 1
-    item: {fileID: 11400000, guid: 7d5fce5558a82fa46bcc98f0d1f9f6cf, type: 2}
-  - quantity: 5
+  - quantity: 0
+    item: {fileID: 11400000, guid: c795d3aa20a60314485760f140d904bd, type: 2}
+  - quantity: 0
     item: {fileID: 11400000, guid: c795d3aa20a60314485760f140d904bd, type: 2}
   - quantity: 1
     item: {fileID: 11400000, guid: 7d5fce5558a82fa46bcc98f0d1f9f6cf, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: c795d3aa20a60314485760f140d904bd, type: 2}
+  - quantity: 0
+    item: {fileID: 0}
+  GrabedItem:
+    quantity: 0
+    item: {fileID: 0}

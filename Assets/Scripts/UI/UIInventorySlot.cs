@@ -20,7 +20,7 @@ namespace scripts.UI
 
         public void Initialize(InventoryItemModel item, int id,Action<UIInventorySlot,
             InventoryItemModel> OnGrabItem, Action<InventoryItemModel, UIInventoryItem, UIInventorySlot> onClickThisSlot,
-            bool isEquipment = false, EquipmentType equipmentType = default)
+            bool isEquipment = false, EquipmentType equipmentType = EquipmentType.None)
         {
             this.id = id;
             this.isEquipment = isEquipment;

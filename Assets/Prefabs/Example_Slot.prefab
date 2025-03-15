@@ -88,4 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2b246f167866d41bf3569912f72ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  id: 0
+  isEquipment: 0
+  equipmentType: 5

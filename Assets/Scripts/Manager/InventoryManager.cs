@@ -16,6 +16,17 @@ namespace scripts.UI
 
         public void Initialize()
         {
+            LoadInventory();
+
+
+            AppliedLoadChanges();
+        }
+        public void SaveInventory()
+        {
+            DataManager.SaveData(inventoryModel);
+        }
+        public void LoadInventory()
+        {
             bool dataSaved = DataManager.LoadData(out inventoryModel);
 
             if (!dataSaved)
@@ -23,13 +34,19 @@ namespace scripts.UI
                 inventoryModel = new InventoryModel(inventorySlots.Count, equipmentsSlots.Count);
                 DataManager.SaveData(inventoryModel);
             }
-
+        }
+        public void AppliedLoadChanges()
+        {
             for (int i = 0; i < inventorySlots.Count; i++)
             {
+                if (inventorySlots[i].HasItem)
+                {
+                    DestroyImmediate(inventorySlots[i].Item.gameObject);
+                }
                 if (!inventoryModel.InventoryItems[i].IsEmpty)
                 {
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
-                    InventoryItemModel inventoryItemModel = new InventoryItemModel(1, 1);
+                    InventoryItemModel inventoryItemModel = inventoryModel.InventoryItems[i];
                     inventorySlots[i].SetItem(item);
                     inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
                     inventoryModel.InventoryItems[i] = inventoryItemModel;
@@ -42,9 +59,19 @@ namespace scripts.UI
 
             for (int i = 0; i < equipmentsSlots.Count; i++)
             {
+                if (equipmentsSlots[i].HasItem)
+                {
+                    DestroyImmediate(equipmentsSlots[i].Item);
+                }
                 equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
             }
             uIDragAndDrop.Initialize(OnItemDropped);
+        }
+
+        public void ReloadInventory()
+        {
+            LoadInventory();
+            AppliedLoadChanges();
         }
 
         private void OnItemGrabbed(UIInventorySlot fromSlot, InventoryItemModel item)
@@ -126,25 +153,20 @@ namespace scripts.UI
         private void Update()
         {
             uIDragAndDrop.Update();
-
-            if (Input.GetKeyDown(KeyCode.Alpha0))
+        }
+        public void AddRandomItem()
+        {
+            for (int i = 0; i < inventorySlots.Count; i++)
             {
-                for (int i = 0; i < inventorySlots.Count; i++)
+                if (!inventorySlots[i].HasItem)
                 {
-                    if(!inventorySlots[i].HasItem)
-                    {
-                        UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
-                        InventoryItemModel inventoryItemModel = new InventoryItemModel(1,1);
-                        inventorySlots[i].SetItem(item);
-                        inventorySlots[i].Initialize(inventoryItemModel, i,OnItemGrabbed,OnItemTryUse,false);
-                        inventoryModel.InventoryItems[i] = inventoryItemModel;
-                        return;
-                    }
+                    UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
+                    InventoryItemModel inventoryItemModel = new InventoryItemModel(Random.Range(0,ItemsController.Instance.GetAllItemsAmount()-1), 1);
+                    inventorySlots[i].SetItem(item);
+                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
+                    inventoryModel.InventoryItems[i] = inventoryItemModel;
+                    return;
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                DataManager.SaveData(inventoryModel);
             }
         }
     }

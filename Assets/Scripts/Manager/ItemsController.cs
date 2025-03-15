@@ -19,6 +19,10 @@ public class ItemsController : MonoBehaviour
     
     [SerializeField] private List<ItemSO> items = null;
     
+    public int GetAllItemsAmount()
+    {
+        return items.Count;
+    }
     public ItemSO GetItem(int id)
     {
         for (int i = 0; i < items.Count; i++)

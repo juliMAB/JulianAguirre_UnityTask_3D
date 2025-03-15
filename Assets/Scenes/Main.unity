@@ -802,6 +802,11 @@ MonoBehaviour:
   - {fileID: 143686631}
   - {fileID: 1757992402}
   prefabItem: {fileID: 3726108863171228451, guid: 06854e00e754caf4389567ea7b46549c, type: 3}
+  uIDragAndDrop:
+    GrabedItem: {fileID: 0}
+    fromSlot: {fileID: 0}
+    ItemPrefab: {fileID: 0}
+    Inventory: {fileID: 1524584870}
 --- !u!4 &600446833
 Transform:
   m_ObjectHideFlags: 0

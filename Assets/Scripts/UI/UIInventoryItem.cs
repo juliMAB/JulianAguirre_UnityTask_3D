@@ -19,6 +19,7 @@ namespace scripts.UI
         private InventoryItemModel model = null;
 
         public Action<PointerEventData, InventoryItemModel> OnDrop1 { get => OnDrop; set => OnDrop = value; }
+        public InventoryItemModel Model { get => model;}
 
         private void Awake()
         {
@@ -42,7 +43,11 @@ namespace scripts.UI
 
         public void SetValues(InventoryItemModel model, Action<InventoryItemModel> OnGrab)
         {
+            if (model == null) return;
+            if (model.id == -1)
+                return;
             this.OnGrab = OnGrab;
+            
             ItemSO data = ItemsController.Instance.GetItem(model.id);
             this.model = model;
             image.sprite = data.ItemImage;

@@ -49,7 +49,7 @@ namespace scripts.UI
 
         private void OnItemGrabbed(UIInventorySlot fromSlot, InventoryItemModel item)
         {
-            uIDragAndDrop.StartDrag(fromSlot.Item, fromSlot);
+            uIDragAndDrop.StartDrag(fromSlot);
         }
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)

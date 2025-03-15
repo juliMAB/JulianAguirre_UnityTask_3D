@@ -27,8 +27,9 @@ namespace scripts.UI
             }
         }
 
-        public void StartDrag(UIInventoryItem item, UIInventorySlot fromSlot)
+        public void StartDrag(UIInventorySlot fromSlot)
         {
+            UIInventoryItem item = fromSlot.Item;
             item.transform.SetParent(Inventory);
             this.fromSlot = fromSlot;
             GrabedItem = item;
@@ -44,6 +45,7 @@ namespace scripts.UI
             else
             {
                 toSlot.SetItem(GrabedItem);
+                fromSlot.RemoveItem();
             }
             GrabedItem.OnDrop1 = null;
             GrabedItem = null;
@@ -61,6 +63,7 @@ namespace scripts.UI
                 if (slot != null)
                     break;
             }
+            Debug.Log("Drop item at: " + slot);
             onDrop?.Invoke(model, slot,fromSlot);
             EndDrag(slot);
         }

@@ -21,6 +21,7 @@ namespace scripts.UI
             this.id = id;
             this.isEquipment = isEquipment;
             this.equipmentType = equipmentType;
+            this.OnGrabItem = OnGrabItem;
 
             if (item.IsEmpty)
             {
@@ -28,11 +29,16 @@ namespace scripts.UI
             }
 
             this.item.SetValues(item, GrabItem);
-            this.OnGrabItem = OnGrabItem;
         }
 
         public void SetItem(UIInventoryItem item)
         {
+            if (item == this.item) 
+            {
+                item.transform.position = transform.position;
+                item.transform.SetParent(transform);
+                return; 
+            }
             if (this.item)
             {
                 Destroy(item.gameObject);
@@ -40,6 +46,8 @@ namespace scripts.UI
             this.item = item;
             item.transform.position = transform.position;
             item.transform.SetParent(transform);
+            Debug.Log(this.name + " Set item: " + item);
+            this.item.SetValues(item.Model, GrabItem);
         }
 
         public void RemoveItem()

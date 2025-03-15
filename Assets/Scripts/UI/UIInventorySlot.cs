@@ -39,6 +39,10 @@ namespace scripts.UI
         {
             if (item == null)
             {
+                if (this.item)
+                {
+                    Destroy(this.item.gameObject);
+                }
                 return;
             }
             if (item == this.item) 

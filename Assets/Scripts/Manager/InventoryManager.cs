@@ -49,7 +49,6 @@ namespace scripts.UI
                     InventoryItemModel inventoryItemModel = inventoryModel.InventoryItems[i];
                     inventorySlots[i].SetItem(item);
                     inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
-                    inventoryModel.InventoryItems[i] = inventoryItemModel;
                 }
                 else
                 {
@@ -61,9 +60,14 @@ namespace scripts.UI
             {
                 if (equipmentsSlots[i].HasItem)
                 {
-                    DestroyImmediate(equipmentsSlots[i].Item);
+                    DestroyImmediate(equipmentsSlots[i].Item.gameObject);
                 }
-                equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
+                if (!inventoryModel.EquipedItems[i].IsEmpty)
+                {
+                    UIInventoryItem item = Instantiate(prefabItem, equipmentsSlots[i].transform).GetComponent<UIInventoryItem>();
+                    equipmentsSlots[i].SetItem(item);
+                    equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
+                }
             }
             uIDragAndDrop.Initialize(OnItemDropped);
         }
@@ -165,6 +169,18 @@ namespace scripts.UI
                     inventorySlots[i].SetItem(item);
                     inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
                     inventoryModel.InventoryItems[i] = inventoryItemModel;
+                    return;
+                }
+            }
+        }
+        public void DeleteLastItem()
+        {
+            for (int i = inventorySlots.Count-1; i >= 0; i--)
+            {
+                if (inventorySlots[i].HasItem)
+                {
+                    inventorySlots[i].SetItem(null);
+                    inventoryModel.InventoryItems[i] = new InventoryItemModel();
                     return;
                 }
             }

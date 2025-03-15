@@ -12,7 +12,7 @@ namespace scripts.UI
 
         [SerializeField] private UIInventoryItem GrabedItem = null;
         [SerializeField] private UIInventorySlot fromSlot = null;
-        [SerializeField] private GameObject ItemPrefab = null;
+        //[SerializeField] private GameObject ItemPrefab = null;
 
         [SerializeField] private Transform Inventory;
 
@@ -76,7 +76,7 @@ namespace scripts.UI
 
             if (toSlot)
             {
-                if (toSlot.equipmentType == EquipmentType.None)
+                if (toSlot.EquipmentType == EquipmentType.None)
                 {
                     Debug.Log("Drop item at: " + toSlot);
                     onDrop?.Invoke(model, toSlot, fromSlot);
@@ -86,7 +86,7 @@ namespace scripts.UI
                 else
                 {
                     ItemSO item_so = ItemsController.Instance.GetItem(model.id);
-                    if (item_so.EquipType == toSlot.equipmentType)
+                    if (item_so.EquipType == toSlot.EquipmentType)
                     {
                         if (!toSlot.HasItem)
                         {

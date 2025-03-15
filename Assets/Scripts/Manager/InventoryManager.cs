@@ -16,20 +16,39 @@ namespace scripts.UI
 
         [SerializeField] private UIDragAndDrop uIDragAndDrop = new();
 
+        [SerializeField] private UIDisplayCurrentItem uiDisplayCurrentItem = new();
+
         #endregion
 
         #region Private_Fields
         private InventoryModel inventoryModel;
 
         private Action<InventoryItemModel> onConsume = null;
+
+        private Action<string, string> onSendToPanel = null;
         #endregion
 
-
+        private void HoveringSlot(UIInventorySlot slot)
+        {
+            if (slot == null)
+            {
+                onSendToPanel?.Invoke(null, null);
+                return;
+            }
+            if (!slot.HasItem)
+            {
+                onSendToPanel?.Invoke(null,null);
+                return;
+            }
+            ItemSO item_so = ItemsController.Instance.GetItem(slot.Item.Model.id);
+            onSendToPanel?.Invoke(item_so.name, item_so.Description);
+        }
 
 
         public void Initialize(Action<InventoryItemModel> ConsumeItem)
         {
             onConsume = ConsumeItem;
+            uiDisplayCurrentItem.Initialize(out onSendToPanel);
             LoadInventory();
 
 
@@ -62,11 +81,11 @@ namespace scripts.UI
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
                     InventoryItemModel inventoryItemModel = inventoryModel.InventoryItems[i];
                     inventorySlots[i].SetItem(item);
-                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
+                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, HoveringSlot, false);
                 }
                 else
                 {
-                    inventorySlots[i].Initialize(inventoryModel.InventoryItems[i], i, OnItemGrabbed, OnItemTryUse, false);
+                    inventorySlots[i].Initialize(inventoryModel.InventoryItems[i], i, OnItemGrabbed, OnItemTryUse, HoveringSlot, false);
                 }
                 inventorySlots[i].gameObject.name = "InventorySlot_" + i.ToString();
             }
@@ -82,7 +101,7 @@ namespace scripts.UI
                     UIInventoryItem item = Instantiate(prefabItem, equipmentsSlots[i].transform).GetComponent<UIInventoryItem>();
                     equipmentsSlots[i].SetItem(item);
                 }
-                equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
+                equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, HoveringSlot, true, (EquipmentType)i);
             }
             uIDragAndDrop.Initialize(OnItemDropped);
         }
@@ -104,7 +123,7 @@ namespace scripts.UI
             {
                 UIInventorySlot toSlot = equipmentsSlots[(int)item_so.EquipType];
                 if (toSlot.HasItem) return;
-                if (toSlot.equipmentType == item_so.EquipType)
+                if (toSlot.EquipmentType == item_so.EquipType)
                 {
                     OnItemDropped(model, toSlot, fromSlot);
                     uIDragAndDrop.TrySwitchItemsUI(fromSlot, toSlot, uiItem);
@@ -121,12 +140,12 @@ namespace scripts.UI
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
         {
-            int fromEquipId = fromSlot.id - inventorySlots.Count;
+            int fromEquipId = fromSlot.Id - inventorySlots.Count;
             if (!toSlot) //out slot.
             {
-                if (!fromSlot.isEquipment)
+                if (!fromSlot.IsEquipment)
                 {
-                    inventoryModel.InventoryItems[fromSlot.id].id = -1;
+                    inventoryModel.InventoryItems[fromSlot.Id].id = -1;
                 }
                 else
                 {
@@ -135,36 +154,36 @@ namespace scripts.UI
             }
             else //to other slot.
             {
-                int toEquipId = toSlot.id - inventorySlots.Count;
+                int toEquipId = toSlot.Id - inventorySlots.Count;
                 if (toSlot.HasItem) //ocuped.
                 {
                     return; //nothing change.
                 }
                 else
                 {
-                    if (!fromSlot.isEquipment && !toSlot.isEquipment)
+                    if (!fromSlot.IsEquipment && !toSlot.IsEquipment)
                     {
-                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.id];
-                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.id];
-                        inventoryModel.InventoryItems[fromSlot.id] = temp_b;
-                        inventoryModel.InventoryItems[toSlot.id] = temp_a;
+                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
+                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
+                        inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
+                        inventoryModel.InventoryItems[toSlot.Id] = temp_a;
                     }
-                    else if(fromSlot.isEquipment && toSlot.isEquipment)
+                    else if(fromSlot.IsEquipment && toSlot.IsEquipment)
                     {
                         return;
                     }
-                    else if (fromSlot.isEquipment && !toSlot.isEquipment)
+                    else if (fromSlot.IsEquipment && !toSlot.IsEquipment)
                     {
                         InventoryItemModel temp_a = inventoryModel.EquipedItems[fromEquipId];
-                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.id];
+                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
                         inventoryModel.EquipedItems[fromEquipId] = temp_b;
-                        inventoryModel.InventoryItems[toSlot.id] = temp_a;
+                        inventoryModel.InventoryItems[toSlot.Id] = temp_a;
                     }
-                    else if (!fromSlot.isEquipment && toSlot.isEquipment)
+                    else if (!fromSlot.IsEquipment && toSlot.IsEquipment)
                     {
-                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.id];
+                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
                         InventoryItemModel temp_b = inventoryModel.EquipedItems[toEquipId];
-                        inventoryModel.InventoryItems[fromSlot.id] = temp_b;
+                        inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
                         inventoryModel.EquipedItems[toEquipId] = temp_a;
                     }
 
@@ -194,7 +213,7 @@ namespace scripts.UI
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
                     InventoryItemModel inventoryItemModel = new InventoryItemModel(UnityEngine.Random.Range(0,ItemsController.Instance.GetAllItemsAmount()-1), 1);
                     inventorySlots[i].SetItem(item);
-                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
+                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, HoveringSlot, false);
                     inventoryModel.InventoryItems[i] = inventoryItemModel;
                     return;
                 }

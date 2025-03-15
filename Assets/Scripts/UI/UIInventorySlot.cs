@@ -1,25 +1,49 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 namespace scripts.UI
 {
-    public class UIInventorySlot : MonoBehaviour
+    public class UIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        #region Private_Fields
         private UIInventoryItem item = null;
 
-        public int id = 0;
-
-        public bool isEquipment = false;
-        public EquipmentType equipmentType = default;
-
-        public UIInventoryItem Item => item;
-        public bool HasItem => item;
-
-        public Action<UIInventorySlot, InventoryItemModel> onGrabItem = null;
+        private Action<UIInventorySlot, InventoryItemModel> onGrabItem = null;
 
         private Action<InventoryItemModel, UIInventoryItem, UIInventorySlot> onClickThisSlot = null;
 
-        public void Initialize(InventoryItemModel item, int id,Action<UIInventorySlot,
+        private Action<UIInventorySlot> onHoverSlot = null;
+
+        #endregion
+        #region Public_Fields
+        [SerializeField] private int id = 0;
+        [SerializeField] private bool isEquipment = false;
+        [SerializeField] private EquipmentType equipmentType = default;
+        #endregion
+        #region Public_Properties
+        public UIInventoryItem Item { get => item; }
+        public bool HasItem => item;
+        public int Id { get => id;}
+        public bool IsEquipment { get => isEquipment;}
+        public EquipmentType EquipmentType { get => equipmentType; }
+        #endregion
+
+        #region Unity_Methods
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            onHoverSlot?.Invoke(this);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            onHoverSlot?.Invoke(null);
+        }
+        #endregion
+
+        #region Public_Methods
+        public void Initialize(InventoryItemModel item, int id, Action<UIInventorySlot,
             InventoryItemModel> OnGrabItem, Action<InventoryItemModel, UIInventoryItem, UIInventorySlot> onClickThisSlot,
+            Action<UIInventorySlot> onHoverSlot,
             bool isEquipment = false, EquipmentType equipmentType = EquipmentType.None)
         {
             this.id = id;
@@ -27,6 +51,7 @@ namespace scripts.UI
             this.equipmentType = equipmentType;
             this.onGrabItem = OnGrabItem;
             this.onClickThisSlot = onClickThisSlot;
+            this.onHoverSlot = onHoverSlot;
             if (item.IsEmpty)
             {
                 return;
@@ -67,18 +92,19 @@ namespace scripts.UI
             item = null;
         }
 
-        public void DestroyItemGO()
-        {
-            DestroyImmediate(item.gameObject);
-        }
-        public void GrabItem(InventoryItemModel model)
+        #endregion
+
+        #region Private_Methods
+        private void GrabItem(InventoryItemModel model)
         {
             onGrabItem?.Invoke(this, model);
         }
-        public void TryUseItem(InventoryItemModel model ,UIInventoryItem uiItem)
+        private void TryUseItem(InventoryItemModel model ,UIInventoryItem uiItem)
         {
             onClickThisSlot?.Invoke(model, uiItem, this);
         }
+
+        #endregion
     }
 }
 

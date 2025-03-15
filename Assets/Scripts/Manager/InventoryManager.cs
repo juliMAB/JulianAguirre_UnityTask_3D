@@ -5,14 +5,24 @@ namespace scripts.UI
 {
     public class InventoryManager : MonoBehaviour
     {
+        #region Exposed_Fields
         [SerializeField] private List<UIInventorySlot> inventorySlots = null;
         [SerializeField] private List<UIInventorySlot> equipmentsSlots = null;
 
         [SerializeField] private GameObject prefabItem = null;
 
-        private InventoryModel inventoryModel;
+        [SerializeField] private GameObject InGameMenu = null;
 
         [SerializeField] private UIDragAndDrop uIDragAndDrop = new();
+
+        #endregion
+
+        #region Private_Fields
+        private InventoryModel inventoryModel;
+        #endregion
+
+
+
 
         public void Initialize()
         {
@@ -54,6 +64,7 @@ namespace scripts.UI
                 {
                     inventorySlots[i].Initialize(inventoryModel.InventoryItems[i], i, OnItemGrabbed, OnItemTryUse, false);
                 }
+                inventorySlots[i].gameObject.name = "InventorySlot_" + i.ToString();
             }
 
             for (int i = 0; i < equipmentsSlots.Count; i++)
@@ -66,8 +77,8 @@ namespace scripts.UI
                 {
                     UIInventoryItem item = Instantiate(prefabItem, equipmentsSlots[i].transform).GetComponent<UIInventoryItem>();
                     equipmentsSlots[i].SetItem(item);
-                    equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
                 }
+                equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
             }
             uIDragAndDrop.Initialize(OnItemDropped);
         }
@@ -157,6 +168,10 @@ namespace scripts.UI
         private void Update()
         {
             uIDragAndDrop.Update();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                InGameMenu.SetActive(!InGameMenu.activeSelf);
+            }
         }
         public void AddRandomItem()
         {

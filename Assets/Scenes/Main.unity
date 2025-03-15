@@ -675,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (7)
+      value: I_Slot_0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -788,7 +788,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (5)
+      value: I_Slot_0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -977,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (1)
+      value: Chest_Slot
       objectReference: {fileID: 0}
     - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Color.a
@@ -1268,6 +1268,7 @@ MonoBehaviour:
   - {fileID: 143686631}
   - {fileID: 1757992402}
   prefabItem: {fileID: 3726108863171228451, guid: 06854e00e754caf4389567ea7b46549c, type: 3}
+  InGameMenu: {fileID: 1369249791}
   uIDragAndDrop:
     GrabedItem: {fileID: 0}
     fromSlot: {fileID: 0}
@@ -1667,7 +1668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (9)
+      value: I_Slot_0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -2223,7 +2224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (2)
+      value: Weapon_Slot
       objectReference: {fileID: 0}
     - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Color.a
@@ -2515,7 +2516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot
+      value: Head_Slot
       objectReference: {fileID: 0}
     - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Color.a
@@ -2723,7 +2724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (3)
+      value: Feet_Slot
       objectReference: {fileID: 0}
     - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Color.a
@@ -3557,7 +3558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (8)
+      value: I_Slot_0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -3674,7 +3675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
-      value: Example_Slot (6)
+      value: I_Slot_0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x

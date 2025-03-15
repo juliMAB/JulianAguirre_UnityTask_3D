@@ -106,11 +106,13 @@ namespace scripts.UI
                 if (toSlot.HasItem) return;
                 if (toSlot.equipmentType == item_so.EquipType)
                 {
+                    OnItemDropped(model, toSlot, fromSlot);
                     uIDragAndDrop.TrySwitchItemsUI(fromSlot, toSlot, uiItem);
                 }
             }
             if (item_so.IsConsumable)
             {
+                OnItemDropped(model, null, fromSlot);
                 uIDragAndDrop.ConsumeItem(fromSlot,uiItem);
                 onConsume?.Invoke(model);
                 Destroy(uiItem.gameObject);
@@ -120,7 +122,6 @@ namespace scripts.UI
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
         {
             int fromEquipId = fromSlot.id - inventorySlots.Count;
-            int toEquipId = toSlot.id - inventorySlots.Count;
             if (!toSlot) //out slot.
             {
                 if (!fromSlot.isEquipment)
@@ -134,6 +135,7 @@ namespace scripts.UI
             }
             else //to other slot.
             {
+                int toEquipId = toSlot.id - inventorySlots.Count;
                 if (toSlot.HasItem) //ocuped.
                 {
                     return; //nothing change.

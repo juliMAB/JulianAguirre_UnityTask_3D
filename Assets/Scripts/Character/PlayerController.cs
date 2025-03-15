@@ -61,9 +61,4 @@ public class PlayerController : MonoBehaviour
         Vector3 groundCheckPosition = transform.position + groundCheckOffset;
         isGrounded = Physics.CheckSphere(groundCheckPosition, groundCheckRadius, groundLayer);
     }
-    private void ItemCheck()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10, ItemDropLayer);
-
-    }
 }

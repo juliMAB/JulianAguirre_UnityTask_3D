@@ -72,8 +72,9 @@ namespace scripts.UI
             }
             if (item == this.item) 
             {
-                item.transform.position = transform.position;
                 item.transform.SetParent(transform);
+                item.transform.position = transform.position;
+                //item.GetComponent<RectTransform>().localPosition = Vector3.z;
                 return; 
             }
             if (this.item)
@@ -81,8 +82,9 @@ namespace scripts.UI
                 Destroy(item.gameObject);
             }
             this.item = item;
-            item.transform.position = transform.position;
             item.transform.SetParent(transform);
+            item.transform.position = transform.position;
+            //item.GetComponent<RectTransform>().localPosition = Vector3.zero;
             Debug.Log(this.name + " Set item: " + item);
             this.item.SetValues(item.Model, GrabItem, TryUseItem);
         }

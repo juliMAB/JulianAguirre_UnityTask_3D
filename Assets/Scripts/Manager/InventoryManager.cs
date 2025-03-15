@@ -112,9 +112,9 @@ namespace scripts.UI
             }
             if (item_so.IsConsumable)
             {
+                onConsume?.Invoke(model);
                 OnItemDropped(model, null, fromSlot);
                 uIDragAndDrop.ConsumeItem(fromSlot,uiItem);
-                onConsume?.Invoke(model);
                 Destroy(uiItem.gameObject);
             }
         }

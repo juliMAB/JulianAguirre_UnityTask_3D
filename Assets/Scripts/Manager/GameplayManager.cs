@@ -6,16 +6,43 @@ public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager = null;
     [SerializeField] private CharacterStats characterStats = null;
+    [SerializeField] private PlayerController player = null;
+
+    [SerializeField] private GameObject dropItemPrefab = null;
+
+    private bool isInventoryOpen => inventoryManager.getInventoryState();
 
     private Action<InventoryItemModel> ConsumeItem = null;
     private Action<float> addLife = null;
     private Action<float> addHungry = null;
+
     void Start()
     {
         ConsumeItem += EvalutateItemUse;
-        inventoryManager.Initialize(ConsumeItem);
+
+        inventoryManager.Initialize(ConsumeItem, CreateDropAtEnviroment);
 
         characterStats.Initialize(out addLife,out addHungry);
+
+
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            player.enabled = isInventoryOpen;
+            inventoryManager.SetInventory(!isInventoryOpen);
+            if (isInventoryOpen)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
     }
     private void EvalutateItemUse(InventoryItemModel model)
     {
@@ -37,5 +64,10 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private void CreateDropAtEnviroment(InventoryItemModel model)
+    {
+        GameObject dropItem = Instantiate(dropItemPrefab, player.transform.position, Quaternion.identity);
+        dropItem.GetComponent<DropedItem>().Initialize(model);
+    }
     
 }

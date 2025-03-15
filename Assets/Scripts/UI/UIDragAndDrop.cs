@@ -39,8 +39,11 @@ namespace scripts.UI
         }
         public void TrySwitchItemsUI(UIInventorySlot fromSlot, UIInventorySlot toSlot, UIInventoryItem item)
         {
-            if (!toSlot) return; //no slot.
-            if (toSlot.HasItem)
+            if (!toSlot)
+            {
+                GameObject.Destroy(fromSlot.Item.gameObject);
+            }
+            else if (toSlot.HasItem)
             {
                 SwitchItems(fromSlot,toSlot);
             }
@@ -49,7 +52,9 @@ namespace scripts.UI
                 toSlot.SetItem(item);
                 fromSlot.RemoveItem();
             }
-            item.OnDrop1 = null;
+            if (item)
+                item.OnDrop1 = null;
+            
             item = null;
             fromSlot = null;
             GrabedItem = null;
@@ -97,6 +102,13 @@ namespace scripts.UI
                         }
                     }
                 }
+            }
+            else
+            {
+                Debug.Log("Drop item at: null");
+                onDrop?.Invoke(model, null, fromSlot);
+                TrySwitchItemsUI(fromSlot, null, GrabedItem);
+                return;
             }
             Debug.Log("Drop item at: " + fromSlot);
             onDrop?.Invoke(model, fromSlot, fromSlot);

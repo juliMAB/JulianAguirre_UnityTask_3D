@@ -24,9 +24,20 @@ namespace scripts.UI
         private InventoryModel inventoryModel;
 
         private Action<InventoryItemModel> onConsume = null;
+        private Action<InventoryItemModel> onDropToEnviro = null;
 
         private Action<string, string> onSendToPanel = null;
         #endregion
+
+        public void SetInventory(bool value)
+        {
+            InGameMenu.SetActive(value);
+        }
+        public bool getInventoryState()
+        {
+            return InGameMenu.activeSelf;
+        }
+
 
         private void HoveringSlot(UIInventorySlot slot)
         {
@@ -45,9 +56,10 @@ namespace scripts.UI
         }
 
 
-        public void Initialize(Action<InventoryItemModel> ConsumeItem)
+        public void Initialize(Action<InventoryItemModel> ConsumeItem, Action<InventoryItemModel> onDropItem)
         {
             onConsume = ConsumeItem;
+            onDropToEnviro = onDropItem;
             uiDisplayCurrentItem.Initialize(out onSendToPanel);
             LoadInventory();
 
@@ -151,6 +163,7 @@ namespace scripts.UI
                 {
                     inventoryModel.EquipedItems[fromEquipId].id = -1;
                 }
+                onDropToEnviro?.Invoke(itemModel);
             }
             else //to other slot.
             {
@@ -191,7 +204,6 @@ namespace scripts.UI
             }
             
         }
-
         private int GetEquipmentIndex(int i)
         {
             return inventorySlots.Count + i; 
@@ -199,10 +211,6 @@ namespace scripts.UI
         private void Update()
         {
             uIDragAndDrop.Update();
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                InGameMenu.SetActive(!InGameMenu.activeSelf);
-            }
         }
         public void AddRandomItem()
         {

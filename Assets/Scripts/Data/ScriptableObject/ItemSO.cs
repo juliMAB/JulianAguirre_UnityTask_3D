@@ -13,4 +13,8 @@ public class ItemSO : ScriptableObject
     public string Description;
     [SerializeField]
     public Sprite ItemImage;
+    [SerializeField]
+    public EquipmentType EquipType;
+    [SerializeField]
+    public bool IsConsumable;
 }

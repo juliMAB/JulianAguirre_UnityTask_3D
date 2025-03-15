@@ -17,3 +17,5 @@ MonoBehaviour:
   Name: Red Heart
   Description: Sequence of Life
   ItemImage: {fileID: -727174867, guid: edacd27f39236ba4884dd8d8ecd4b972, type: 3}
+  IsEquipable: 5
+  IsConsumable: 0

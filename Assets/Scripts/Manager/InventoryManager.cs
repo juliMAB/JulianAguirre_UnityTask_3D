@@ -10,39 +10,39 @@ namespace scripts.UI
 
         [SerializeField] private GameObject prefabItem = null;
 
-        private InventoryModel model;
+        private InventoryModel inventoryModel;
 
         [SerializeField] private UIDragAndDrop uIDragAndDrop = new();
 
         public void Initialize()
         {
-            bool dataSaved = DataManager.LoadData(out model);
+            bool dataSaved = DataManager.LoadData(out inventoryModel);
 
             if (!dataSaved)
             {
-                model = new InventoryModel(inventorySlots.Count, equipmentsSlots.Count);
-                DataManager.SaveData(model);
+                inventoryModel = new InventoryModel(inventorySlots.Count, equipmentsSlots.Count);
+                DataManager.SaveData(inventoryModel);
             }
 
             for (int i = 0; i < inventorySlots.Count; i++)
             {
-                if (!model.InventoryItems[i].IsEmpty)
+                if (!inventoryModel.InventoryItems[i].IsEmpty)
                 {
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
                     InventoryItemModel inventoryItemModel = new InventoryItemModel(1, 1);
                     inventorySlots[i].SetItem(item);
-                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, false);
-                    model.InventoryItems[i] = inventoryItemModel;
+                    inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
+                    inventoryModel.InventoryItems[i] = inventoryItemModel;
                 }
                 else
                 {
-                    inventorySlots[i].Initialize(model.InventoryItems[i], i, OnItemGrabbed, false);
+                    inventorySlots[i].Initialize(inventoryModel.InventoryItems[i], i, OnItemGrabbed, OnItemTryUse, false);
                 }
             }
 
             for (int i = 0; i < equipmentsSlots.Count; i++)
             {
-                equipmentsSlots[i].Initialize(model.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, true, (EquipmentType)i);
+                equipmentsSlots[i].Initialize(inventoryModel.EquipedItems[i], GetEquipmentIndex(i), OnItemGrabbed, OnItemTryUse, true, (EquipmentType)i);
             }
             uIDragAndDrop.Initialize(OnItemDropped);
         }
@@ -51,18 +51,33 @@ namespace scripts.UI
         {
             uIDragAndDrop.StartDrag(fromSlot);
         }
+        private void OnItemTryUse(InventoryItemModel model, UIInventoryItem uiItem, UIInventorySlot fromSlot)
+        {
+            ItemSO item_so = ItemsController.Instance.GetItem(model.id);
+            if (item_so.EquipType < EquipmentType.Max)
+            {
+                UIInventorySlot toSlot = equipmentsSlots[(int)item_so.EquipType];
+                if (toSlot.HasItem) return;
+                if (toSlot.equipmentType == item_so.EquipType)
+                {
+                    uIDragAndDrop.TrySwitchItemsUI(fromSlot, toSlot, uiItem);
+                }
+            }
+        }
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
         {
+            int fromEquipId = fromSlot.id - inventorySlots.Count;
+            int toEquipId = toSlot.id - inventorySlots.Count;
             if (!toSlot) //out slot.
             {
                 if (!fromSlot.isEquipment)
                 {
-                    model.InventoryItems[fromSlot.id].id = -1;
+                    inventoryModel.InventoryItems[fromSlot.id].id = -1;
                 }
                 else
                 {
-                    model.InventoryItems[fromSlot.id - inventorySlots.Count].id = -1;
+                    inventoryModel.EquipedItems[fromEquipId].id = -1;
                 }
             }
             else //to other slot.
@@ -75,10 +90,10 @@ namespace scripts.UI
                 {
                     if (!fromSlot.isEquipment && !toSlot.isEquipment)
                     {
-                        InventoryItemModel temp_a = model.InventoryItems[fromSlot.id];
-                        InventoryItemModel temp_b = model.InventoryItems[toSlot.id];
-                        model.InventoryItems[fromSlot.id] = temp_b;
-                        model.InventoryItems[toSlot.id] = temp_a;
+                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.id];
+                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.id];
+                        inventoryModel.InventoryItems[fromSlot.id] = temp_b;
+                        inventoryModel.InventoryItems[toSlot.id] = temp_a;
                     }
                     else if(fromSlot.isEquipment && toSlot.isEquipment)
                     {
@@ -86,17 +101,17 @@ namespace scripts.UI
                     }
                     else if (fromSlot.isEquipment && !toSlot.isEquipment)
                     {
-                        InventoryItemModel temp_a = model.EquipedItems[fromSlot.id];
-                        InventoryItemModel temp_b = model.InventoryItems[toSlot.id];
-                        model.EquipedItems[fromSlot.id] = temp_b;
-                        model.InventoryItems[toSlot.id] = temp_a;
+                        InventoryItemModel temp_a = inventoryModel.EquipedItems[fromEquipId];
+                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.id];
+                        inventoryModel.EquipedItems[fromEquipId] = temp_b;
+                        inventoryModel.InventoryItems[toSlot.id] = temp_a;
                     }
                     else if (!fromSlot.isEquipment && toSlot.isEquipment)
                     {
-                        InventoryItemModel temp_a = model.InventoryItems[fromSlot.id];
-                        InventoryItemModel temp_b = model.EquipedItems[toSlot.id];
-                        model.InventoryItems[fromSlot.id] = temp_b;
-                        model.EquipedItems[toSlot.id] = temp_a;
+                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.id];
+                        InventoryItemModel temp_b = inventoryModel.EquipedItems[toEquipId];
+                        inventoryModel.InventoryItems[fromSlot.id] = temp_b;
+                        inventoryModel.EquipedItems[toEquipId] = temp_a;
                     }
 
                 }
@@ -121,15 +136,15 @@ namespace scripts.UI
                         UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
                         InventoryItemModel inventoryItemModel = new InventoryItemModel(1,1);
                         inventorySlots[i].SetItem(item);
-                        inventorySlots[i].Initialize(inventoryItemModel, i,OnItemGrabbed,false);
-                        model.InventoryItems[i] = inventoryItemModel;
+                        inventorySlots[i].Initialize(inventoryItemModel, i,OnItemGrabbed,OnItemTryUse,false);
+                        inventoryModel.InventoryItems[i] = inventoryItemModel;
                         return;
                     }
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha9))
             {
-                DataManager.SaveData(model);
+                DataManager.SaveData(inventoryModel);
             }
         }
     }

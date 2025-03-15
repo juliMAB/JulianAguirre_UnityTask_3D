@@ -14,25 +14,33 @@ namespace scripts.UI
         public UIInventoryItem Item => item;
         public bool HasItem => item;
 
-        public Action<UIInventorySlot, InventoryItemModel> OnGrabItem = null;
+        public Action<UIInventorySlot, InventoryItemModel> onGrabItem = null;
 
-        public void Initialize(InventoryItemModel item, int id,Action<UIInventorySlot, InventoryItemModel> OnGrabItem, bool isEquipment = false, EquipmentType equipmentType = default)
+        private Action<InventoryItemModel, UIInventoryItem, UIInventorySlot> onClickThisSlot = null;
+
+        public void Initialize(InventoryItemModel item, int id,Action<UIInventorySlot,
+            InventoryItemModel> OnGrabItem, Action<InventoryItemModel, UIInventoryItem, UIInventorySlot> onClickThisSlot,
+            bool isEquipment = false, EquipmentType equipmentType = default)
         {
             this.id = id;
             this.isEquipment = isEquipment;
             this.equipmentType = equipmentType;
-            this.OnGrabItem = OnGrabItem;
-
+            this.onGrabItem = OnGrabItem;
+            this.onClickThisSlot = onClickThisSlot;
             if (item.IsEmpty)
             {
                 return;
             }
 
-            this.item.SetValues(item, GrabItem);
+            this.item.SetValues(item, GrabItem, TryUseItem);
         }
 
         public void SetItem(UIInventoryItem item)
         {
+            if (item == null)
+            {
+                return;
+            }
             if (item == this.item) 
             {
                 item.transform.position = transform.position;
@@ -47,7 +55,7 @@ namespace scripts.UI
             item.transform.position = transform.position;
             item.transform.SetParent(transform);
             Debug.Log(this.name + " Set item: " + item);
-            this.item.SetValues(item.Model, GrabItem);
+            this.item.SetValues(item.Model, GrabItem, TryUseItem);
         }
 
         public void RemoveItem()
@@ -61,7 +69,11 @@ namespace scripts.UI
         }
         public void GrabItem(InventoryItemModel model)
         {
-            OnGrabItem?.Invoke(this, model);
+            onGrabItem?.Invoke(this, model);
+        }
+        public void TryUseItem(InventoryItemModel model ,UIInventoryItem uiItem)
+        {
+            onClickThisSlot?.Invoke(model, uiItem, this);
         }
     }
 }

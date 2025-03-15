@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.Progress;
 namespace scripts.UI
 {
     [Serializable]
@@ -35,39 +37,65 @@ namespace scripts.UI
             GrabedItem = item;
             item.OnDrop1 = ItemWasDrop;
         }
-        public void EndDrag(UIInventorySlot toSlot)
+        public void TrySwitchItemsUI(UIInventorySlot fromSlot, UIInventorySlot toSlot, UIInventoryItem item)
         {
             if (!toSlot) return; //no slot.
             if (toSlot.HasItem)
             {
-                SwitchItems(toSlot);
+                SwitchItems(fromSlot,toSlot);
             }
             else
             {
-                toSlot.SetItem(GrabedItem);
+                toSlot.SetItem(item);
                 fromSlot.RemoveItem();
             }
-            GrabedItem.OnDrop1 = null;
-            GrabedItem = null;
+            item.OnDrop1 = null;
+            item = null;
             fromSlot = null;
+            GrabedItem = null;
         }
 
         private void ItemWasDrop(PointerEventData eventData, InventoryItemModel model)
         {
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, results);
-            UIInventorySlot slot = null;
+            UIInventorySlot toSlot = null;
             foreach (RaycastResult result in results)
             {
-                slot = result.gameObject.GetComponent<UIInventorySlot>();
-                if (slot != null)
+                toSlot = result.gameObject.GetComponent<UIInventorySlot>();
+                if (toSlot != null)
                     break;
             }
-            Debug.Log("Drop item at: " + slot);
-            onDrop?.Invoke(model, slot,fromSlot);
-            EndDrag(slot);
+
+            if (toSlot)
+            {
+                if (toSlot.equipmentType == EquipmentType.None)
+                {
+                    Debug.Log("Drop item at: " + toSlot);
+                    onDrop?.Invoke(model, toSlot, fromSlot);
+                    TrySwitchItemsUI(fromSlot, toSlot, GrabedItem);
+                    return;
+                }
+                else
+                {
+                    ItemSO item_so = ItemsController.Instance.GetItem(model.id);
+                    if (item_so.EquipType == toSlot.equipmentType)
+                    {
+                        if (!toSlot.HasItem)
+                        {
+                            Debug.Log("Drop item at: " + toSlot);
+                            onDrop?.Invoke(model, toSlot, fromSlot);
+                            TrySwitchItemsUI(fromSlot, toSlot, GrabedItem);
+                            return;
+                        }
+                    }
+                }
+            }
+            Debug.Log("Drop item at: " + fromSlot);
+            onDrop?.Invoke(model, fromSlot, fromSlot);
+            TrySwitchItemsUI(fromSlot, fromSlot, GrabedItem);
         }
-        public void SwitchItems(UIInventorySlot toSlot)
+        public void SwitchItems(UIInventorySlot fromSlot,UIInventorySlot toSlot)
         {
             UIInventoryItem temp_A = fromSlot.Item;
             UIInventoryItem temp_B = toSlot.Item;

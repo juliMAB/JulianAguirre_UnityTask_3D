@@ -36,5 +36,6 @@ public enum EquipmentType
     Chest,
     Weapon,
     Feet,
-    Max
+    Max,
+    None
 }

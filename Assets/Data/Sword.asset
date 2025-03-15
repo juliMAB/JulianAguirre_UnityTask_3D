@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d14b0a9ae26b48b461b36699ebf22, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: 3
   MaxStackSize: 1
   Name: Wood Sword
   Description: just a sword
   ItemImage: {fileID: 604272192, guid: edacd27f39236ba4884dd8d8ecd4b972, type: 3}
+  EquipType: 0
+  IsConsumable: 0

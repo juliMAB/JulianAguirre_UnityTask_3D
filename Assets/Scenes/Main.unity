@@ -147,6 +147,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (3)
@@ -260,6 +264,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot
@@ -373,6 +381,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (7)
@@ -486,6 +498,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (5)
@@ -667,9 +683,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1902455059}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: isEquipment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.6862745
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -681,7 +709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -689,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.y
@@ -733,11 +761,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 147
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -400
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -924,6 +952,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (1)
@@ -1037,6 +1069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (9)
@@ -1450,9 +1486,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1902455059}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: isEquipment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.6862745
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -1464,7 +1512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1472,7 +1520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.y
@@ -1516,11 +1564,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 497
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -400
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1572,6 +1620,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7d5fce5558a82fa46bcc98f0d1f9f6cf, type: 2}
   - {fileID: 11400000, guid: 05355953ea7cdcf499d668de71b9e419, type: 2}
   - {fileID: 11400000, guid: c795d3aa20a60314485760f140d904bd, type: 2}
+  - {fileID: 11400000, guid: ead0e4a2f85b69347804eb2dd8b6bfa1, type: 2}
 --- !u!4 &1316035117
 Transform:
   m_ObjectHideFlags: 0
@@ -1595,9 +1644,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1902455059}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: isEquipment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.6862745
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -1609,7 +1666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1617,7 +1674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.y
@@ -1661,7 +1718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 322
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1795,9 +1852,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1902455059}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594373320242275503, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.6862745
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Pivot.x
@@ -1809,7 +1874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1817,7 +1882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchorMin.y
@@ -1861,7 +1926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 322
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3650286220031288538, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2098,6 +2163,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (4)
@@ -2327,6 +2396,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (8)
@@ -2440,6 +2513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (6)
@@ -2553,6 +2630,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1004989301}
     m_Modifications:
+    - target: {fileID: 530533385777054623, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
+      propertyPath: equipmentType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3313900520774365410, guid: 4b053de4e7d47e1419449f453ddfa4d1, type: 3}
       propertyPath: m_Name
       value: Example_Slot (2)

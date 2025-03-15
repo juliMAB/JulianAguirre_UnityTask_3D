@@ -16,11 +16,13 @@ public class GameplayManager : MonoBehaviour
     private Action<float> addLife = null;
     private Action<float> addHungry = null;
 
+    private Func<InventoryItemModel,bool> pickUpItem = null;
+
     void Start()
     {
         ConsumeItem += EvalutateItemUse;
 
-        inventoryManager.Initialize(ConsumeItem, CreateDropAtEnviroment);
+        inventoryManager.Initialize(ConsumeItem, CreateDropAtEnviroment,out pickUpItem);
 
         characterStats.Initialize(out addLife,out addHungry);
 
@@ -67,7 +69,11 @@ public class GameplayManager : MonoBehaviour
     private void CreateDropAtEnviroment(InventoryItemModel model)
     {
         GameObject dropItem = Instantiate(dropItemPrefab, player.transform.position, Quaternion.identity);
-        dropItem.GetComponent<DropedItem>().Initialize(model);
+        dropItem.GetComponent<DropedItem>().Initialize(model,player.transform, TryToPickUp);
+    }
+    private bool TryToPickUp(InventoryItemModel item)
+    {
+        return pickUpItem(item);
     }
     
 }

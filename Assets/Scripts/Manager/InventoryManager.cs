@@ -54,12 +54,29 @@ namespace scripts.UI
             ItemSO item_so = ItemsController.Instance.GetItem(slot.Item.Model.id);
             onSendToPanel?.Invoke(item_so.name, item_so.Description);
         }
+        public bool EvaluatePickUpItem(InventoryItemModel floorItem)
+        {
+            bool hasSpace = false;
+            for (int i = 0; i < inventorySlots.Count; i++)
+            {
+                if (!inventorySlots[i].HasItem)
+                {
+                    hasSpace = true;
+                }
+            }
+            if (hasSpace)
+            {
+                AddItemToNextValidPosition(floorItem);
+                return true;
+            }
+            return false;
+        }
 
-
-        public void Initialize(Action<InventoryItemModel> ConsumeItem, Action<InventoryItemModel> onDropItem)
+        public void Initialize(Action<InventoryItemModel> ConsumeItem, Action<InventoryItemModel> onDropItem,out Func<InventoryItemModel, bool> pickUpItem)
         {
             onConsume = ConsumeItem;
             onDropToEnviro = onDropItem;
+            pickUpItem = EvaluatePickUpItem;
             uiDisplayCurrentItem.Initialize(out onSendToPanel);
             LoadInventory();
 
@@ -152,9 +169,11 @@ namespace scripts.UI
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
         {
+            
             int fromEquipId = fromSlot.Id - inventorySlots.Count;
             if (!toSlot) //out slot.
             {
+                onDropToEnviro?.Invoke(itemModel);
                 if (!fromSlot.IsEquipment)
                 {
                     inventoryModel.InventoryItems[fromSlot.Id].id = -1;
@@ -163,7 +182,6 @@ namespace scripts.UI
                 {
                     inventoryModel.EquipedItems[fromEquipId].id = -1;
                 }
-                onDropToEnviro?.Invoke(itemModel);
             }
             else //to other slot.
             {
@@ -208,19 +226,26 @@ namespace scripts.UI
         }
         public void AddRandomItem()
         {
+            InventoryItemModel randomItem = new InventoryItemModel(UnityEngine.Random.Range(0, ItemsController.Instance.GetAllItemsAmount() - 1), 1);
+            AddItemToNextValidPosition(randomItem);
+        }
+        private void AddItemToNextValidPosition(InventoryItemModel newItem)
+        {
             for (int i = 0; i < inventorySlots.Count; i++)
             {
                 if (!inventorySlots[i].HasItem)
                 {
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
-                    InventoryItemModel inventoryItemModel = new InventoryItemModel(UnityEngine.Random.Range(0,ItemsController.Instance.GetAllItemsAmount()-1), 1);
+                    InventoryItemModel inventoryItemModel = newItem;
                     inventorySlots[i].SetItem(item);
                     inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, HoveringSlot, false);
                     inventoryModel.InventoryItems[i] = inventoryItemModel;
                     return;
                 }
             }
+
         }
+
         public void DeleteLastItem()
         {
             for (int i = inventorySlots.Count-1; i >= 0; i--)

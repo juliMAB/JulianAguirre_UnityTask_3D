@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private Vector3 groundCheckOffset;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask ItemDropLayer;
 
     private bool isGrounded;
     private float ySpeed;
@@ -59,5 +60,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 groundCheckPosition = transform.position + groundCheckOffset;
         isGrounded = Physics.CheckSphere(groundCheckPosition, groundCheckRadius, groundLayer);
+    }
+    private void ItemCheck()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10, ItemDropLayer);
+
     }
 }

@@ -168,39 +168,33 @@ namespace scripts.UI
             else //to other slot.
             {
                 int toEquipId = toSlot.Id - inventorySlots.Count;
-                if (toSlot.HasItem) //ocuped.
+                
+                if (!fromSlot.IsEquipment && !toSlot.IsEquipment)
                 {
-                    return; //nothing change.
+                    InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
+                    InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
+                    inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
+                    inventoryModel.InventoryItems[toSlot.Id] = temp_a;
                 }
-                else
+                else if (fromSlot.IsEquipment && toSlot.IsEquipment)
                 {
-                    if (!fromSlot.IsEquipment && !toSlot.IsEquipment)
-                    {
-                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
-                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
-                        inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
-                        inventoryModel.InventoryItems[toSlot.Id] = temp_a;
-                    }
-                    else if(fromSlot.IsEquipment && toSlot.IsEquipment)
-                    {
-                        return;
-                    }
-                    else if (fromSlot.IsEquipment && !toSlot.IsEquipment)
-                    {
-                        InventoryItemModel temp_a = inventoryModel.EquipedItems[fromEquipId];
-                        InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
-                        inventoryModel.EquipedItems[fromEquipId] = temp_b;
-                        inventoryModel.InventoryItems[toSlot.Id] = temp_a;
-                    }
-                    else if (!fromSlot.IsEquipment && toSlot.IsEquipment)
-                    {
-                        InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
-                        InventoryItemModel temp_b = inventoryModel.EquipedItems[toEquipId];
-                        inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
-                        inventoryModel.EquipedItems[toEquipId] = temp_a;
-                    }
-
+                    return;
                 }
+                else if (fromSlot.IsEquipment && !toSlot.IsEquipment)
+                {
+                    InventoryItemModel temp_a = inventoryModel.EquipedItems[fromEquipId];
+                    InventoryItemModel temp_b = inventoryModel.InventoryItems[toSlot.Id];
+                    inventoryModel.EquipedItems[fromEquipId] = temp_b;
+                    inventoryModel.InventoryItems[toSlot.Id] = temp_a;
+                }
+                else if (!fromSlot.IsEquipment && toSlot.IsEquipment)
+                {
+                    InventoryItemModel temp_a = inventoryModel.InventoryItems[fromSlot.Id];
+                    InventoryItemModel temp_b = inventoryModel.EquipedItems[toEquipId];
+                    inventoryModel.InventoryItems[fromSlot.Id] = temp_b;
+                    inventoryModel.EquipedItems[toEquipId] = temp_a;
+                }
+                
             }
             
         }

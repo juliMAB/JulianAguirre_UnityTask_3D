@@ -52,8 +52,6 @@ namespace scripts.UI
                 toSlot.SetItem(item);
                 fromSlot.RemoveItem();
             }
-            if (item)
-                item.OnDrop1 = null;
             
             item = null;
             fromSlot = null;

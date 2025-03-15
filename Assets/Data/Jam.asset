@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d14b0a9ae26b48b461b36699ebf22, type: 3}
   m_Name: Jam
   m_EditorClassIdentifier: 
+  ID: 2
   MaxStackSize: 10
   Name: Jam
   Description: Restore healt

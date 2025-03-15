@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using System;
 using UnityEngine;
 namespace scripts.UI
 {
@@ -6,13 +6,31 @@ namespace scripts.UI
     {
         private UIInventoryItem item = null;
 
-        private RectTransform rectTransform = null;
+        public int id = 0;
 
-        public RectTransform RectTransform => rectTransform;
-        public void Start()
+        public bool isEquipment = false;
+        public EquipmentType equipmentType = default;
+
+        public UIInventoryItem Item => item;
+        public bool HasItem => item;
+
+        public Action<UIInventorySlot, InventoryItemModel> OnGrabItem = null;
+
+        public void Initialize(InventoryItemModel item, int id,Action<UIInventorySlot, InventoryItemModel> OnGrabItem, bool isEquipment = false, EquipmentType equipmentType = default)
         {
-            rectTransform = GetComponent<RectTransform>();
+            this.id = id;
+            this.isEquipment = isEquipment;
+            this.equipmentType = equipmentType;
+
+            if (item.IsEmpty)
+            {
+                return;
+            }
+
+            this.item.SetValues(item, GrabItem);
+            this.OnGrabItem = OnGrabItem;
         }
+
         public void SetItem(UIInventoryItem item)
         {
             if (this.item)
@@ -24,22 +42,18 @@ namespace scripts.UI
             item.transform.SetParent(transform);
         }
 
-        public bool HasItem => item;
-
-        public UIInventoryItem RemoveItem()
+        public void RemoveItem()
         {
-            UIInventoryItem temp = item;
             item = null;
-            return temp;
         }
 
         public void DestroyItemGO()
         {
             DestroyImmediate(item.gameObject);
         }
-        public void SetValues(InventoryItem item)
+        public void GrabItem(InventoryItemModel model)
         {
-            this.item.SetValues(item);
+            OnGrabItem?.Invoke(this, model);
         }
     }
 }

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40d14b0a9ae26b48b461b36699ebf22, type: 3}
-  m_Name: Heart
+  m_Script: {fileID: 11500000, guid: d1eaa49c06a636443b354e1052305fad, type: 3}
+  m_Name: GeneralData
   m_EditorClassIdentifier: 
-  ID: 0
-  MaxStackSize: 1
-  Name: Red Heart
-  Description: Sequence of Life
-  ItemImage: {fileID: -727174867, guid: edacd27f39236ba4884dd8d8ecd4b972, type: 3}
+  inventoryData:
+  - {fileID: 11400000, guid: cb2cb15482cd6b24e923b0253d4bb5ce, type: 2}
+  - {fileID: 11400000, guid: cde862d24adfc92479dd22798fb1c0a5, type: 2}

@@ -3,7 +3,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ItemSO : ScriptableObject
 {
-    public int ID => GetInstanceID();
+    [SerializeField]
+    public int ID = -1;
     [SerializeField]
     public int MaxStackSize = 1;
     [SerializeField]

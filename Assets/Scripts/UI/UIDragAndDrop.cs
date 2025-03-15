@@ -54,6 +54,13 @@ namespace scripts.UI
             fromSlot = null;
             GrabedItem = null;
         }
+        public void ConsumeItem(UIInventorySlot fromSlot, UIInventoryItem item)
+        {
+            fromSlot.RemoveItem();
+            item.OnDrop1 = null;
+            fromSlot = null;
+            GrabedItem = null;
+        }
 
         private void ItemWasDrop(PointerEventData eventData, InventoryItemModel model)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,13 +20,16 @@ namespace scripts.UI
 
         #region Private_Fields
         private InventoryModel inventoryModel;
+
+        private Action<InventoryItemModel> onConsume = null;
         #endregion
 
 
 
 
-        public void Initialize()
+        public void Initialize(Action<InventoryItemModel> ConsumeItem)
         {
+            onConsume = ConsumeItem;
             LoadInventory();
 
 
@@ -105,6 +109,12 @@ namespace scripts.UI
                     uIDragAndDrop.TrySwitchItemsUI(fromSlot, toSlot, uiItem);
                 }
             }
+            if (item_so.IsConsumable)
+            {
+                uIDragAndDrop.ConsumeItem(fromSlot,uiItem);
+                onConsume?.Invoke(model);
+                Destroy(uiItem.gameObject);
+            }
         }
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
@@ -180,7 +190,7 @@ namespace scripts.UI
                 if (!inventorySlots[i].HasItem)
                 {
                     UIInventoryItem item = Instantiate(prefabItem, inventorySlots[i].transform).GetComponent<UIInventoryItem>();
-                    InventoryItemModel inventoryItemModel = new InventoryItemModel(Random.Range(0,ItemsController.Instance.GetAllItemsAmount()-1), 1);
+                    InventoryItemModel inventoryItemModel = new InventoryItemModel(UnityEngine.Random.Range(0,ItemsController.Instance.GetAllItemsAmount()-1), 1);
                     inventorySlots[i].SetItem(item);
                     inventorySlots[i].Initialize(inventoryItemModel, i, OnItemGrabbed, OnItemTryUse, false);
                     inventoryModel.InventoryItems[i] = inventoryItemModel;

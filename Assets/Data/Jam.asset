@@ -19,3 +19,4 @@ MonoBehaviour:
   ItemImage: {fileID: -1742483344, guid: edacd27f39236ba4884dd8d8ecd4b972, type: 3}
   EquipType: 5
   IsConsumable: 1
+  effect: 2

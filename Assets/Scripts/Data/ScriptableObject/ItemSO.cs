@@ -17,4 +17,14 @@ public class ItemSO : ScriptableObject
     public EquipmentType EquipType;
     [SerializeField]
     public bool IsConsumable;
+    [SerializeField]
+    public typeConsumable effect;
+}
+public enum typeConsumable
+{
+    AddLife,
+    RemoveLife,
+    AddHungry,
+    RemoveHungry,
+    None = default
 }

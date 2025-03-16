@@ -90,7 +90,7 @@ public class GameplayManager : MonoBehaviour
             audioSource.clip = pickUpSFX;
             audioSource.Play();
         }
-        return pickUpItem(item);
+        return isPicked;
     }
     public void GenerateItemDrop(int id)
     {

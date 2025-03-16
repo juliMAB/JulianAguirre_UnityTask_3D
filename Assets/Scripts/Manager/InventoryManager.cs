@@ -62,6 +62,7 @@ namespace scripts.UI
                 if (!inventorySlots[i].HasItem)
                 {
                     hasSpace = true;
+                    break;
                 }
             }
             if (hasSpace)
@@ -162,8 +163,8 @@ namespace scripts.UI
             {
                 onConsume?.Invoke(model);
                 //OnItemDropped(model, null, fromSlot);
-                inventoryModel.InventoryItems[fromSlot.Id].id = -1;
                 uIDragAndDrop.ConsumeItem(fromSlot,uiItem);
+                inventoryModel.InventoryItems[fromSlot.Id].id = -1;
                 Destroy(uiItem.gameObject);
             }
         }

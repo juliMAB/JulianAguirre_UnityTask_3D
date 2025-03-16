@@ -7,6 +7,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager = null;
     [SerializeField] private CharacterStats characterStats = null;
     [SerializeField] private PlayerController player = null;
+    [SerializeField] private DropedItemsScene dropedItemsScene = null;
 
     [SerializeField] private GameObject dropItemPrefab = null;
 
@@ -26,7 +27,7 @@ public class GameplayManager : MonoBehaviour
 
         characterStats.Initialize(out addLife,out addHungry);
 
-
+        dropedItemsScene.Inizialited(TryToPickUp);
     }
     private void Update()
     {

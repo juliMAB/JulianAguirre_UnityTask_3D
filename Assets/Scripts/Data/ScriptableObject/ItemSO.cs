@@ -18,7 +18,7 @@ public class ItemSO : ScriptableObject
     [SerializeField]
     public bool IsConsumable;
     [SerializeField]
-    public typeConsumable effect;
+    public typeConsumable effect = typeConsumable.None;
 }
 public enum typeConsumable
 {
@@ -26,5 +26,5 @@ public enum typeConsumable
     RemoveLife,
     AddHungry,
     RemoveHungry,
-    None = default
+    None
 }

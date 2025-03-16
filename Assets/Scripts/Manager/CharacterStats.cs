@@ -7,10 +7,10 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] Slider visualSliderHungry;
     [SerializeField] Slider visualSliderHealt;
 
-    [SerializeField,Range(0,1)] private float hungryDecay;
+    [SerializeField,Range(0,0.1f)] private float hungryDecay;
 
     private float hungry = 1f;
-    private float healt = 1f;
+    private float healt = 0.5f;
 
     public void Initialize(out Action<float> addHealt,out Action<float> addHungry)
     {

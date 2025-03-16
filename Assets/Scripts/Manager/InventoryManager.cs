@@ -161,7 +161,8 @@ namespace scripts.UI
             if (item_so.IsConsumable)
             {
                 onConsume?.Invoke(model);
-                OnItemDropped(model, null, fromSlot);
+                //OnItemDropped(model, null, fromSlot);
+                inventoryModel.InventoryItems[fromSlot.Id].id = -1;
                 uIDragAndDrop.ConsumeItem(fromSlot,uiItem);
                 Destroy(uiItem.gameObject);
             }
@@ -169,7 +170,7 @@ namespace scripts.UI
 
         private void OnItemDropped(InventoryItemModel itemModel,UIInventorySlot toSlot, UIInventorySlot fromSlot)
         {
-            
+            Debug.Log(toSlot + " : " + fromSlot);
             int fromEquipId = fromSlot.Id - inventorySlots.Count;
             if (!toSlot) //out slot.
             {

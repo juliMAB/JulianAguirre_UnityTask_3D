@@ -33,6 +33,9 @@ public class GameplayManager : MonoBehaviour
         characterStats.Initialize(out addLife,out addHungry);
 
         dropedItemsScene.Inizialited(TryToPickUp);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {

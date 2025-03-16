@@ -19,7 +19,7 @@ public class CharacterStats : MonoBehaviour
     }
     private void Update()
     {
-        if (hungryDecay>0)
+        if (hungry>0)
         {
             hungry -= Time.deltaTime * hungryDecay;
             visualSliderHungry.value = hungry;
@@ -27,11 +27,28 @@ public class CharacterStats : MonoBehaviour
     }
     private void AddHealt(float q)
     {
+        if (healt < 0 && q < 0)
+        {
+            return;
+        }
+        if (healt>1 && q>0)
+        {
+            return;
+        }
         healt += q;
         visualSliderHealt.value = healt;
     }
     private void AddHealtHungry(float q)
     {
+        if (hungry<0 && q<0)
+        {
+            return;
+        }
+        if (hungry > 1 && q > 0)
+        {
+            return;
+        }
+        
         hungry += q;
         visualSliderHungry.value = healt;
     }

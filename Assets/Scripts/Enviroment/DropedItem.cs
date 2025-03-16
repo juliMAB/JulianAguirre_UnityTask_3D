@@ -7,7 +7,7 @@ public class DropedItem : MonoBehaviour
     [SerializeField] private float distanceToShowPickup = 2;
     [SerializeField] private TextMeshProUGUI textPickUp = null;
     private Func<InventoryItemModel,bool> onPickUp= null;
-    InventoryItemModel item = null;
+    [SerializeField] InventoryItemModel item = null;
     Transform target = null;
 
     public void Initialize(InventoryItemModel item,Transform target,Func<InventoryItemModel,bool> onPickUp)
@@ -18,6 +18,11 @@ public class DropedItem : MonoBehaviour
         this.target = target;
         textPickUp.text = "";
         this.onPickUp = onPickUp;
+    }
+    private void Start()
+    {
+        if (target == null)
+            target = Camera.main.transform;
     }
 
     private void Update()

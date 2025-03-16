@@ -52,7 +52,7 @@ namespace scripts.UI
                 return;
             }
             ItemSO item_so = ItemsController.Instance.GetItem(slot.Item.Model.id);
-            onSendToPanel?.Invoke(item_so.name, item_so.Description);
+            onSendToPanel?.Invoke(item_so.Name, item_so.Description);
         }
         public bool EvaluatePickUpItem(InventoryItemModel floorItem)
         {

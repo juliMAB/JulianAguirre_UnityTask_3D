@@ -6,22 +6,13 @@ using UnityEngine;
 /// </summary>
 public class Cheats : MonoBehaviour
 {
-    [SerializeField] private GameObject UI_InventoryContent = null;
-    [SerializeField] private GameObject UI_InventoryItemPrefab = null;
+    [SerializeField] private GameObject tutorialPanel = null;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            Instantiate(UI_InventoryItemPrefab, UI_InventoryContent.transform);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            int childs = UI_InventoryContent.transform.childCount;
-            if (childs > 1)
-            {
-                Destroy(UI_InventoryContent.transform.GetChild(childs - 1).gameObject);
-            }
+            tutorialPanel.SetActive(!tutorialPanel.activeSelf);
         }
     }
 }

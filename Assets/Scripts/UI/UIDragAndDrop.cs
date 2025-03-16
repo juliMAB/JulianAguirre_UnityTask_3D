@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
 namespace scripts.UI
 {
     [Serializable]

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6_HealPotion
   m_EditorClassIdentifier: 
   ID: 6
-  MaxStackSize: 10
+  MaxStackSize: 1
   Name: Health Potion
   Description: '"A murky green brew that inflicts slow, deadly poison when consumed
     or applied to a weapon."'

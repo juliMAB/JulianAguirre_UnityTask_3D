@@ -15,11 +15,13 @@ namespace scripts.UI
         private Action<UIInventorySlot> onHoverSlot = null;
 
         #endregion
+
         #region Public_Fields
         [SerializeField] private int id = 0;
         [SerializeField] private bool isEquipment = false;
         [SerializeField] private EquipmentType equipmentType = default;
         #endregion
+
         #region Public_Properties
         public UIInventoryItem Item { get => item; }
         public bool HasItem => item;
@@ -74,7 +76,6 @@ namespace scripts.UI
             {
                 item.transform.SetParent(transform);
                 item.transform.position = transform.position;
-                //item.GetComponent<RectTransform>().localPosition = Vector3.z;
                 return; 
             }
             if (this.item)
@@ -84,8 +85,7 @@ namespace scripts.UI
             this.item = item;
             item.transform.SetParent(transform);
             item.transform.position = transform.position;
-            //item.GetComponent<RectTransform>().localPosition = Vector3.zero;
-            Debug.Log(this.name + " Set item: " + item);
+            Debug.Log(this.name + " Set item: " + item.Model);
             this.item.SetValues(item.Model, GrabItem, TryUseItem);
         }
 

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 /// <summary>
 /// Cheats class is used to test the inventory system.
 /// 
@@ -7,6 +9,11 @@ using UnityEngine;
 public class Cheats : MonoBehaviour
 {
     [SerializeField] private GameObject tutorialPanel = null;
+    [SerializeField] private CharacterStats playerStats = null;
+    [SerializeField] private GameplayManager gameplayManager = null;
+    [SerializeField] private ItemSO itemToGenerateByCheat = null;
+    [SerializeField] private TMPro.TMP_Dropdown dropdownItems = null;
+    [SerializeField] private GameObject cheatPanel = null;
 
     private void Update()
     {
@@ -15,4 +22,21 @@ public class Cheats : MonoBehaviour
             tutorialPanel.SetActive(!tutorialPanel.activeSelf);
         }
     }
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void GenerateSelectedItem()
+    {
+        gameplayManager.GenerateItemDrop(dropdownItems.value);
+    }
+    public void ResetStats()
+    {
+        playerStats.Reset();
+    }
+
 }

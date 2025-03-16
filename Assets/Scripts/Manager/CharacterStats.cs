@@ -35,4 +35,9 @@ public class CharacterStats : MonoBehaviour
         hungry += q;
         visualSliderHungry.value = healt;
     }
+    public void Reset()
+    {
+        hungry = 1f;
+        healt = 0.5f;
+    }
 }

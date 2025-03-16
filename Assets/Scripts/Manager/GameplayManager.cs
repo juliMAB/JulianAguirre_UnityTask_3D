@@ -7,6 +7,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager = null;
     [SerializeField] private CharacterStats characterStats = null;
     [SerializeField] private PlayerController player = null;
+    [SerializeField] private CameraController cameraController = null;
     [SerializeField] private DropedItemsScene dropedItemsScene = null;
 
     [SerializeField] private GameObject dropItemPrefab = null;
@@ -34,6 +35,7 @@ public class GameplayManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             player.enabled = isInventoryOpen;
+            cameraController.enabled = isInventoryOpen;
             inventoryManager.SetInventory(!isInventoryOpen);
             if (isInventoryOpen)
             {
@@ -75,6 +77,10 @@ public class GameplayManager : MonoBehaviour
     private bool TryToPickUp(InventoryItemModel item)
     {
         return pickUpItem(item);
+    }
+    public void GenerateItemDrop(int id)
+    {
+        CreateDropAtEnviroment(new InventoryItemModel { id = id, quantity = 1 });
     }
     
 }

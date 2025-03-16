@@ -11,9 +11,9 @@ public class Cheats : MonoBehaviour
     [SerializeField] private GameObject tutorialPanel = null;
     [SerializeField] private CharacterStats playerStats = null;
     [SerializeField] private GameplayManager gameplayManager = null;
-    [SerializeField] private ItemSO itemToGenerateByCheat = null;
+    //[SerializeField] private ItemSO itemToGenerateByCheat = null;
     [SerializeField] private TMPro.TMP_Dropdown dropdownItems = null;
-    [SerializeField] private GameObject cheatPanel = null;
+    //[SerializeField] private GameObject cheatPanel = null;
 
     private void Update()
     {

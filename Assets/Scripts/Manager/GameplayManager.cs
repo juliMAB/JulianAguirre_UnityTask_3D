@@ -9,6 +9,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private PlayerController player = null;
     [SerializeField] private CameraController cameraController = null;
     [SerializeField] private DropedItemsScene dropedItemsScene = null;
+    [SerializeField] private AudioSource audioSource = null;
+    [SerializeField] private AudioClip dropSFX = null;
+    [SerializeField] private AudioClip pickUpSFX = null;
+    [SerializeField] private AudioClip openInventorySFX = null;
 
     [SerializeField] private GameObject dropItemPrefab = null;
 
@@ -34,6 +38,8 @@ public class GameplayManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
+            audioSource.clip = openInventorySFX;
+            audioSource.Play();
             player.enabled = isInventoryOpen;
             cameraController.enabled = isInventoryOpen;
             inventoryManager.SetInventory(!isInventoryOpen);
@@ -73,9 +79,17 @@ public class GameplayManager : MonoBehaviour
     {
         GameObject dropItem = Instantiate(dropItemPrefab, player.transform.position, Quaternion.identity);
         dropItem.GetComponent<DropedItem>().Initialize(model,player.transform, TryToPickUp);
+        audioSource.clip = dropSFX;
+        audioSource.Play();
     }
     private bool TryToPickUp(InventoryItemModel item)
     {
+        bool isPicked = pickUpItem(item);
+        if (isPicked)
+        {
+            audioSource.clip = pickUpSFX;
+            audioSource.Play();
+        }
         return pickUpItem(item);
     }
     public void GenerateItemDrop(int id)
